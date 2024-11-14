@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="description" content="Sistema de Recomendação de Filmes. Pesquise filmes usando o campo de entrada com preenchimento automático e obtenha ótimas sugestões.">
+    <title>Sistema de Recomendação de Filmes</title>
+
+    <!-- Links de estilos e scripts externos -->
+    <link rel="shortcut icon" href="{% static 'recommender/logo.png' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- Arquivos CSS locais -->
+    <link rel="stylesheet" href="{% static 'recommender/css/page.css' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+</head>
+
+<body>
+
+<div class="main-container">
+    <div class="frosted-glass">
+        <h1>Recomendação de Filmes</h1>
+        <p class="subheading">Confira esses ótimos filmes que recomendamos para você.</p>
+        <form method="POST">    
+            {% csrf_token %}
+            <div class="formcontainer">
+                <input class="input-field" type="text" id="movie_name" name="movie_name"
+                    placeholder="Comece a digitar para ver sugestões de filmes..." required />
+                <button type="submit" class="submit-button">Buscar</button>
+                <script>
+                    $(function () {
+                        var availableTags = [
+                            {% for mmm in all_movie_names %}
+                            "{{ mmm }}",
+                        {% endfor %}
+                    ];
+                    $("#movie_name").autocomplete({
+                        source: availableTags,
+                        minLength: 3
+                    });
+                });
+                </script>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

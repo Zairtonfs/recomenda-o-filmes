@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="keywords" content="Sistema de Recomendação de Filmes, preenchimento automático, sugestões de filmes, sistema de recomendação">
+
+    <link rel="shortcut icon" href="{% static 'recommender/logo.png' %}">
+    <title>Sistema de Recomendação de Filmes</title>
+
+    <!-- Arquivos de estilo -->
+    <link rel="stylesheet" href="{% static 'recommender/css/resultpage.css' %}" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+</head>
+
+<body>
+
+    <div class="cursor-dot-outline"></div>
+    <div class="cursor-dot"></div>
+
+    <div class="title-container">
+        <h3>Filmes semelhantes a: {{ input_movie_name }}</h3>
+    </div>
+
+    <div class="main-container">
+        {% if recomendation_found %}
+            {% for each_movie_dictionary in recommended_movies %}
+                <div class="card-container">
+                    <h2 class="card-header"><i class="fa fa-film"></i> {{ each_movie_dictionary.movie_title }}</h2>
+                    <p class="card-para">Dirigido por: {{ each_movie_dictionary.movie_director }}</p>
+                    <p class="card-para">Data de Lançamento: {{ each_movie_dictionary.movie_release_date }}</p>
+                    <a target="_blank" href="{{ each_movie_dictionary.google_link }}" class="card-link">Pesquisa no Google <i class="fa fa-arrow-circle-o-right"></i></a>
+                </div>
+            {% endfor %} 
+        {% endif %}
+    </div>
+</body>
+
+</html>
